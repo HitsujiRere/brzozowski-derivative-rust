@@ -160,9 +160,6 @@ mod tests {
             Star(Box::new(Symbol('a'))).derivative('a'),
             Star(Box::new(Symbol('a')))
         );
-        assert_eq!(
-            Star(Box::new(Symbol('a'))).derivative('b'),
-            EmptySet
-        );
+        assert_eq!(Star(Box::new(Symbol('a'))).derivative('b'), EmptySet);
     }
 }

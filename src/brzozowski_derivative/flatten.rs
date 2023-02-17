@@ -137,13 +137,7 @@ mod tests {
     #[test]
     fn flatten_star() {
         use Regex::*;
-        assert_eq!(
-            Star(Box::new(EmptySet)).flatten(),
-            EmptySet
-        );
-        assert_eq!(
-            Star(Box::new(Epsilon)).flatten(),
-            Epsilon
-        );
+        assert_eq!(Star(Box::new(EmptySet)).flatten(), EmptySet);
+        assert_eq!(Star(Box::new(Epsilon)).flatten(), Epsilon);
     }
 }
