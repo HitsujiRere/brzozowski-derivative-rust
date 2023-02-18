@@ -7,8 +7,11 @@ use nom::{
     IResult,
 };
 
-pub fn parse(input: &str) -> IResult<&str, Regex> {
-    expr(input)
+pub fn parse(input: &str) -> Result<Regex, String> {
+    match expr(input) {
+        Ok((_, regex)) => Ok(regex),
+        Err(err) => Err(err.to_string()),
+    }
 }
 
 // expr     = union
