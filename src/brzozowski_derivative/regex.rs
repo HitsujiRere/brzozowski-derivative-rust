@@ -18,9 +18,22 @@ impl fmt::Display for Regex {
             EmptySet => write!(f, "∅"),
             Epsilon => write!(f, "ε"),
             Symbol(ch) => write!(f, "{}", ch),
-            Concat(x, y) => write!(f, "{}{}", x, y),
+            Concat(x, y) => {
+                match **x {
+                    EmptySet | Epsilon | Symbol(_) | Concat(_, _) | Star(_) => write!(f, "{}", x)?,
+                    Union(_, _) => write!(f, "({})", x)?,
+                };
+                match **y {
+                    EmptySet | Epsilon | Symbol(_) | Concat(_, _) | Star(_) => write!(f, "{}", y)?,
+                    Union(_, _) => write!(f, "({})", y)?,
+                };
+                Ok(())
+            }
             Union(x, y) => write!(f, "{}|{}", x, y),
-            Star(r) => write!(f, "{}*", r),
+            Star(r) => match **r {
+                EmptySet | Epsilon | Symbol(_) | Star(_) => write!(f, "{}*", r),
+                Concat(_, _) | Union(_, _) => write!(f, "({})*", r),
+            },
         }
     }
 }

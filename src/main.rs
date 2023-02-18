@@ -19,10 +19,10 @@ fn main() {
 
         match parse(&regex_str) {
             Ok(mut regex) => {
-                println!("Regex: {:?}", regex);
+                println!("Regex: {}", regex);
                 for ch in test_str.chars().collect::<Vec<char>>() {
                     regex = regex.derivative(ch);
-                    println!("Derivative by '{}': {:?}", ch, regex);
+                    println!("Derivative by '{}': {}", ch, regex);
                 }
 
                 if regex.is_accept_empty_str() {
@@ -32,7 +32,7 @@ fn main() {
                 }
             }
             Err(err) => {
-                eprintln!("Error: {}", err);
+                println!("Error: {}", err);
             }
         }
     }
