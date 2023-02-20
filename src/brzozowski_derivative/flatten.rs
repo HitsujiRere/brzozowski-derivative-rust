@@ -30,7 +30,7 @@ impl Regex {
                 },
             },
             Star(r) => match **r {
-                EmptySet => EmptySet,
+                EmptySet => Epsilon,
                 Epsilon => Epsilon,
                 _ => Star(Box::new(r.flatten())),
             },
@@ -137,7 +137,7 @@ mod tests {
     #[test]
     fn flatten_star() {
         use Regex::*;
-        assert_eq!(Star(Box::new(EmptySet)).flatten(), EmptySet);
+        assert_eq!(Star(Box::new(EmptySet)).flatten(), Epsilon);
         assert_eq!(Star(Box::new(Epsilon)).flatten(), Epsilon);
     }
 }
