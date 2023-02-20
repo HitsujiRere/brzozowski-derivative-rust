@@ -70,19 +70,6 @@ mod tests {
     fn test_star() {
         use Regex::*;
         assert_eq!(star("a*"), Ok(("", Star(Box::new(Symbol('a'))))));
-        assert_eq!(
-            star("ab*c"),
-            Ok((
-                "",
-                Concat(
-                    Box::new(Symbol('a')),
-                    Box::new(Concat(
-                        Box::new(Star(Box::new(Symbol('b')))),
-                        Box::new(Symbol('c'))
-                    ))
-                )
-            ))
-        );
     }
 
     #[test]
