@@ -64,7 +64,7 @@ fn paren(input: &str) -> IResult<&str, Regex> {
 }
 
 fn symbol(input: &str) -> IResult<&str, Regex> {
-    map(none_of("()|*+?"), |ch: char| Regex::Symbol(ch))(input)
+    map(alt((none_of("\\()|*+?"), preceded(char('\\'), one_of("\\()|*+?")))), |ch: char| Regex::Symbol(ch))(input)
 }
 
 #[cfg(test)]
@@ -108,5 +108,12 @@ mod tests {
     fn test_symbol() {
         use Regex::*;
         assert_eq!(symbol("a"), Ok(("", Symbol('a'))));
+        assert_eq!(symbol("\\\\"), Ok(("", Symbol('\\'))));
+        assert_eq!(symbol("\\("), Ok(("", Symbol('('))));
+        assert_eq!(symbol("\\)"), Ok(("", Symbol(')'))));
+        assert_eq!(symbol("\\|"), Ok(("", Symbol('|'))));
+        assert_eq!(symbol("\\*"), Ok(("", Symbol('*'))));
+        assert_eq!(symbol("\\+"), Ok(("", Symbol('+'))));
+        assert_eq!(symbol("\\?"), Ok(("", Symbol('?'))));
     }
 }
