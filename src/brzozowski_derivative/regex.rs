@@ -3,11 +3,17 @@ use std::fmt;
 /// 正規表現
 #[derive(Debug, Clone, PartialEq)]
 pub enum Regex {
+    /// 空集合 ∅
     EmptySet,
+    // 空文字列 ε
     Epsilon,
+    // 文字
     Symbol(char),
+    // 連結
     Concat(Box<Regex>, Box<Regex>),
+    // 和集合
     Union(Box<Regex>, Box<Regex>),
+    // クリーネ閉包
     Star(Box<Regex>),
 }
 

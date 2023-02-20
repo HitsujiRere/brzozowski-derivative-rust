@@ -1,7 +1,7 @@
 use super::Regex;
 
 impl Regex {
-    /// 平らにする
+    /// 簡易化する
     pub fn flatten(&self) -> Regex {
         use Regex::*;
         match self {
