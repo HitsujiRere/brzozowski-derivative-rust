@@ -21,11 +21,11 @@ impl Regex {
                 EmptySet => *y.clone(),
                 Epsilon => match **y {
                     EmptySet => Epsilon,
-                    _ => *y.clone(),
+                    Epsilon => Epsilon,
+                    _ => Union(Box::new(*x.clone()), Box::new(*y.clone())),
                 },
                 _ => match **y {
                     EmptySet => *x.clone(),
-                    Epsilon => *x.clone(),
                     _ => Union(Box::new(*x.clone()), Box::new(*y.clone())),
                 },
             },
@@ -126,11 +126,11 @@ mod tests {
         );
         assert_eq!(
             Union(Box::new(Symbol('a')), Box::new(Epsilon)).flatten(),
-            Symbol('a')
+            Union(Box::new(Symbol('a')), Box::new(Epsilon))
         );
         assert_eq!(
             Union(Box::new(Epsilon), Box::new(Symbol('a'))).flatten(),
-            Symbol('a')
+            Union(Box::new(Epsilon), Box::new(Symbol('a')))
         );
     }
 
